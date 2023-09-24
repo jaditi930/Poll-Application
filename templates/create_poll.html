@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %} Create poll {{obj.id}}{% endblock %}
+{% block content %}
+
+    {% csrf_token %}
+    <form action="" method="POST" id="poll_form">
+        <div>
+            <label for="ques">Ques</label>
+            <input type="text" name="ques" id="ques">
+        </div>
+        <div>
+            <label for="opt-1">Option 1</label>
+            <input type="text" name="option" id="opt-1">
+        </div>
+        <div>
+            <label for="opt-2">Option 2</label>
+            <input type="text" name="option" id="opt-2">
+        </div>
+            <button type="button" id="add" onclick="addOption()">Add Option +</button>
+            <button type="submit" id="submit_btn">Create poll</button>
+    </form>
+{% endblock %}
