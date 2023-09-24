@@ -19,14 +19,16 @@
             <a class="nav-link active" aria-current="page" href="#">Active Polls</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Answered Polls</a>
+            <a class="nav-link active" aria-current="page" href="#">Answered Polls</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'create' %}">Create new poll</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 <body>
-    <h1>Hello, user</h1>
     {% block content %}
     {% endblock %}
 
@@ -43,10 +45,10 @@
         document.getElementById("poll_form").removeChild(submit_btn)
 
         document.getElementById("poll_form").innerHTML+=`
-        <div>
-            <label for="opt-${c}">Option ${c}</label>
-            <input type="text" name="option" id="opt-${c}">
-        </div>
+        <div class="mb-3">
+            <label for="opt-${c}" class="form-label">Option ${c}</label>
+            <input type="text" class="form-control" id="opt-${c}" name="option" >
+          </div>
         `
         document.getElementById("poll_form").appendChild(add_btn)
         document.getElementById("poll_form").appendChild(submit_btn)
