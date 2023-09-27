@@ -116,19 +116,29 @@ def save_responses(request):
 @api_view(['GET'])
 def my_polls(request):    
     if request.user.is_authenticated:
-        user_poll_questions=list(PollQuestions.objects.filter(owner=request.user).values_list('id',flat=True))
-        questions=[]
-        print(user_poll_questions)
-        for question in user_poll_questions:
-            myquestion={}
-            myquestion["id"]=question
-            user_poll_responses=PollResponses.objects.filter(question=question).values('option').annotate(count=Count('option')).order_by()
-            myquestion["responses"]=user_poll_responses
-            questions.append(myquestion)
+        my_questions=PollQuestions.objects.filter(owner=request.user)
+        questions_list=[]
+
+        for question in my_questions:
+            question_data=QuestionSerializer(question)
+            question_data=question_data.data
+            options=PollOptions.objects.filter(question=question)
+            options_list=[]
+
+            for option in options:
+                option_data=OptionSerializer(option)
+                option_data=option_data.data
+                option_count=PollResponses.objects.filter(question=question,option=option).count()
+                option_data["count"]=option_count
+                options_list.append(option_data)
+            
+            question_data["options"]=options_list
+            questions_list.append(question_data)
+
         
-        return Response({"questions":questions})
+        return Response({"questions":questions_list})
     else:
-        return Response({"message":"please login to view yout polls"})
+        return Response({"message":"please login to view your polls"})
 
 
 @api_view(['GET'])

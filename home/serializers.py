@@ -3,7 +3,7 @@ from .models import *
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model=PollQuestions
-        fields=['id','owner','value','date_uploaded']
+        fields=['id','value','date_uploaded']
 
 class OptionSerializer(serializers.ModelSerializer):
     class Meta:
