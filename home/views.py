@@ -57,8 +57,13 @@ def create_poll(request):
 @api_view(['GET'])
 def get_active_polls(request):
     if request.user.is_authenticated:
-        active_polls=PollQuestions.objects.filter(status=True)
+
+        user_responses=PollResponses.objects.filter(user=request.user)
+        user_answered_list=list(user_responses.values_list('question',flat=True))
+        # print(user_answered_list)
+        active_polls=PollQuestions.objects.filter(status=True).exclude(owner=request.user).exclude(pk__in=user_answered_list)
         
+        question={}
         for poll in active_polls:
             question_data=QuestionSerializer(poll)
             poll_options=PollOptions.objects.filter(question=poll)
@@ -82,16 +87,21 @@ def save_responses(request):
     if request.user.is_authenticated:
         response=request.data
         try:
-            question=PollQuestions.objects.get(id=response["ques_id"])
-            option=PollOptions.objects.get(id=response["option_id"])
-            new_response=PollResponses(question=question,option=option,user=request.user)
-            new_response.save()
-            return Response({"message":"response saved successfully"})
+            try:
+                existing_response=PollResponses.objects.get(question=question,user=request.user)
+                return Response({"message":"response already exists"})
+            except:
+                question=PollQuestions.objects.get(id=response["ques_id"])
+                option=PollOptions.objects.get(id=response["option_id"])
+                new_response=PollResponses(question=question,option=option,user=request.user)
+                new_response.save()
+                return Response({"message":"response saved successfully"})
         except:
             return Response({"message":"error occured in saving response"})
     else:
         return Response({"message":"please login to save responses"})
 
+    
 @api_view(['GET'])
 def log_out(request):
     logout(request)
