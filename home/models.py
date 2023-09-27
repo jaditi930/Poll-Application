@@ -6,14 +6,14 @@ from django.contrib.auth.models import User
 class PollQuestions(models.Model):
 
     owner=models.ForeignKey(to=User,on_delete=models.CASCADE)
-    status=models.CharField(max_length=100)
-    question_value=models.CharField(max_length=100)
+    status=models.BooleanField(default=1)
+    ques_value=models.CharField(max_length=1000)
 
 
 class PollOptions(models.Model):
 
     ques_id=models.ForeignKey(to=PollQuestions,on_delete=models.CASCADE)
-    opt_value=models.CharField(max_length=100)
+    opt_value=models.CharField(max_length=1000)
 
 class PollResponses(models.Model):
 
