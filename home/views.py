@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate,login,logout
 from rest_framework.decorators import api_view
 from django.middleware.csrf import get_token
 from .models import *
+from .serializers import *
 # Create your views here.
 
 @api_view(['GET'])
@@ -44,18 +45,29 @@ def create_poll(request):
        
        ques_value=data["question"]
        owner=request.user
-       newques=PollQuestions(owner=owner,ques_value=ques_value)
+       newques=PollQuestions(owner=owner,value=ques_value)
        newques.save()
 
        options=data["options"]
        for value in list(options.values()):
-           option=PollOptions(opt_value=value,ques_id=newques)
+           option=PollOptions(value=value,question=newques)
            option.save()
 
        return Response({"message":"poll created successfully"})
    
    return Response({"message":"please login to create a poll"})
 
+@api_view(['GET'])
+def get_active_polls(request):
+    if request.user.is_authenticated:
+        active_polls=PollQuestions.objects.filter(status=True)
+        for poll in active_polls:
+            question_data=QuestionSerializer(poll)
+            ques_id=question_data.id
+            
+
+            return JsonResponse(question_data.data)
+        
 
 @api_view(['GET'])
 def log_out(request):
