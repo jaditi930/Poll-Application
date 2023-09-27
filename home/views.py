@@ -11,10 +11,6 @@ from .serializers import *
 import json
 # Create your views here.
 
-@api_view(['GET'])
-def home(request):
-    return render(request,"all_polls.html")
-
 @api_view(['POST'])
 def log_in(request):
 
@@ -74,11 +70,27 @@ def get_active_polls(request):
             print(options_list)
 
             question=question_data.data
-            print(question)
             question["options"]=options_list
         
-        return JsonResponse(question)
+        return Response(question)
+    else:
+        return Response({"message":"please login to view polls"})
+
         
+@api_view(['POST'])
+def save_responses(request):
+    if request.user.is_authenticated:
+        response=request.data
+        try:
+            question=PollQuestions.objects.get(id=response["ques_id"])
+            option=PollOptions.objects.get(id=response["option_id"])
+            new_response=PollResponses(question=question,option=option,user=request.user)
+            new_response.save()
+            return Response({"message":"response saved successfully"})
+        except:
+            return Response({"message":"error occured in saving response"})
+    else:
+        return Response({"message":"please login to save responses"})
 
 @api_view(['GET'])
 def log_out(request):
