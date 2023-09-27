@@ -117,11 +117,16 @@ def save_responses(request):
 def my_polls(request):    
     if request.user.is_authenticated:
         user_poll_questions=list(PollQuestions.objects.filter(owner=request.user).values_list('id',flat=True))
+        questions=[]
         print(user_poll_questions)
-        # for question in user_poll_questions:
-        user_poll_responses=PollResponses.objects.filter(question__in=user_poll_questions).values('option').annotate(count=Count('option')).order_by()
-        print(user_poll_responses)
-        return Response({"message":"please login to save responses"})
+        for question in user_poll_questions:
+            myquestion={}
+            myquestion["id"]=question
+            user_poll_responses=PollResponses.objects.filter(question=question).values('option').annotate(count=Count('option')).order_by()
+            myquestion["responses"]=user_poll_responses
+            questions.append(myquestion)
+        
+        return Response({"questions":questions})
     else:
         return Response({"message":"please login to view yout polls"})
 
