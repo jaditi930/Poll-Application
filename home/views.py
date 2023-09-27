@@ -8,6 +8,7 @@ from rest_framework.decorators import api_view
 from django.middleware.csrf import get_token
 from .models import *
 from .serializers import *
+import json
 # Create your views here.
 
 @api_view(['GET'])
@@ -61,12 +62,22 @@ def create_poll(request):
 def get_active_polls(request):
     if request.user.is_authenticated:
         active_polls=PollQuestions.objects.filter(status=True)
+        
         for poll in active_polls:
             question_data=QuestionSerializer(poll)
-            ques_id=question_data.id
+            poll_options=PollOptions.objects.filter(question=poll)
             
+            options_list=[]
+            for option in poll_options:
+                option_data=OptionSerializer(option)
+                options_list.append(option_data.data)
+            print(options_list)
 
-            return JsonResponse(question_data.data)
+            question=question_data.data
+            print(question)
+            question["options"]=options_list
+        
+        return JsonResponse(question)
         
 
 @api_view(['GET'])
