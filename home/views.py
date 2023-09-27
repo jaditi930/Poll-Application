@@ -54,17 +54,9 @@ def create_poll(request):
    
    return Response({"message":"please login to create a poll"})
 
-@api_view(['GET'])
-def get_active_polls(request):
-    if request.user.is_authenticated:
-
-        user_responses=PollResponses.objects.filter(user=request.user)
-        user_answered_list=list(user_responses.values_list('question',flat=True))
-        # print(user_answered_list)
-        active_polls=PollQuestions.objects.filter(status=True).exclude(owner=request.user).exclude(pk__in=user_answered_list)
-        
-        question={}
-        for poll in active_polls:
+def serialize(active_polls):
+    question={}
+    for poll in active_polls:
             question_data=QuestionSerializer(poll)
             poll_options=PollOptions.objects.filter(question=poll)
             
@@ -76,8 +68,26 @@ def get_active_polls(request):
 
             question=question_data.data
             question["options"]=options_list
+            return question
+    
+@api_view(['GET'])
+def get_active_polls(request):
+    if request.user.is_authenticated:
+
+        # print(user_answered_list)
+        active_polls=PollQuestions.objects.filter(status=True).exclude(owner=request.user)
+
+        user_responses=PollResponses.objects.filter(user=request.user)
+        user_answered_list=list(user_responses.values_list('question',flat=True))
+
+        answered_polls=active_polls.filter(pk__in=user_answered_list)
+        unanswered_polls=active_polls.exclude(pk__in=user_answered_list)
         
-        return Response(question)
+        answered_polls=serialize(answered_polls)
+        unanswered_polls=serialize(unanswered_polls)
+        # print(unanswered_polls)
+        
+        return Response({"answered_polls":answered_polls,"unanswered_polls":unanswered_polls})
     else:
         return Response({"message":"please login to view polls"})
 
