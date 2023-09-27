@@ -2,10 +2,11 @@
 {% block title %} Create poll {% endblock %}
 {% block content %}
 
-    {% csrf_token %}
     <div class="container-fluid d-flex justify-content-center pt-4">
 
     <form action="" method="POST" id="poll_form" class="col-md-6">
+      {% csrf_token %}
+
         <div class="mb-3">
           <label for="ques" class="form-label">Question</label>
           <input type="text" class="form-control" id="ques" name="ques" required>

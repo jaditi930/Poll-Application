@@ -4,7 +4,8 @@ from . import views
 urlpatterns = [
     path('',views.home,name="home"),
     path('create_poll',views.create_poll,name="create"),
-    path('login',views.login,name="login"),
-    path('signup',views.signup,name="signup"),
+    path('login',views.log_in,name="login"),
+    path('signin',views.signin,name="signin"),
+    path('logout',views.log_out,name="logout"),
 
 ]
