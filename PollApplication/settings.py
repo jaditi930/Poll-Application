@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-7=rj!nwuz$^55j3_w*jg!^@i1s_a_6ffjrc-w!t9v5_v=g@f46
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'home',
     'rest_framework',
 
@@ -50,7 +51,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+# CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOWED_ORIGINS = ['http://localhost:3000',]
+
 
 ROOT_URLCONF = 'PollApplication.urls'
 
@@ -71,6 +78,8 @@ TEMPLATES = [
         },
     },
 ]
+
+CORS_ALLOW_CREDENTIALS = True
 
 WSGI_APPLICATION = 'PollApplication.wsgi.application'
 
