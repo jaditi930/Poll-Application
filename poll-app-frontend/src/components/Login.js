@@ -6,28 +6,11 @@ const user={
     password:""
 
 }
-function log_user()
-{
-    fetch('http://127.0.0.1:7000/login', {
-     
-    // Adding method type
-    method: "POST",
-    credentials:'include',
-     
-    // Adding body or contents to send
-    body: JSON.stringify(user),
-     
-    // Adding headers to the request
-    headers: {
-        "Content-type": "application/json; charset=UTF-8"
-    }
-})
-    .then((response)=>response.json())
-    .then((data)=>{
-        console.log(data)
-    })
-}
-export default function Login()
+// function log_user()
+// {
+
+// }
+export default function Login(props)
 {
     return (
         <>
@@ -45,7 +28,26 @@ export default function Login()
 
       <Button variant="primary" type="submit" onClick={(e)=>{
         e.preventDefault()
-        log_user()
+        // log_user()
+        fetch('http://127.0.0.1:7000/login', {
+     
+        // Adding method type
+        method: "POST",
+        credentials:'include',
+         
+        // Adding body or contents to send
+        body: JSON.stringify(user),
+         
+        // Adding headers to the request
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
+        .then((response)=>response.json())
+        .then((data)=>{
+            console.log(data.token)
+            props.setToken(data.token)
+        })
     }}> 
         Submit
       </Button>

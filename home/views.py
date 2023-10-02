@@ -12,15 +12,16 @@ from .serializers import *
 import json
 # Create your views here.
 
+
 @api_view(['POST'])
 def log_in(request):
-
+    print(request.headers)
     user=authenticate(username=request.data["username"],password=request.data["password"])
 
     if user is not None:
         login(request,user)
-        print(get_token(request))
-        return Response({"message":"user logged"})
+        token=get_token(request)
+        return Response({"message":"user logged","token":token})
     else:
         return Response({"message":"user not logged in"})
 
@@ -37,6 +38,7 @@ def signin(request):
 
 @api_view(['POST'])
 def create_poll(request):
+   print()
    data=request.data
 
    if request.user.is_authenticated:
@@ -58,6 +60,7 @@ def create_poll(request):
     
 @api_view(['GET'])
 def get_active_polls(request):
+    print(request.headers)
     if request.user.is_authenticated:
 
         # print(user_answered_list)
