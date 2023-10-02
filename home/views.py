@@ -1,30 +1,22 @@
-from django.shortcuts import render,redirect
-from django.http import HttpResponse,JsonResponse
 from rest_framework.response import Response
-from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from rest_framework.decorators import api_view
-from django.middleware.csrf import get_token
-from django.db.models import Count
 from .models import *
 from .serializers import *
-import json
 # Create your views here.
 
 
 @api_view(['POST'])
 def log_in(request):
-    print(request.headers)
     user=authenticate(username=request.data["username"],password=request.data["password"])
 
     if user is not None:
         login(request,user)
-        token=get_token(request)
-        return Response({"message":"user logged","token":token})
+        return Response({"message":"user logged"})
     else:
         return Response({"message":"user not logged in"})
-
+    
 @api_view(['POST'])
 def signin(request):
 
@@ -58,7 +50,7 @@ def create_poll(request):
    return Response({"message":"please login to create a poll"})
 
     
-@api_view(['GET'])
+@api_view(['GET','POST'])
 def get_active_polls(request):
     print(request.headers)
     if request.user.is_authenticated:
@@ -90,8 +82,8 @@ def get_active_polls(request):
         print(answered_polls)
         
         return Response({"answered_polls":answered_polls,"unanswered_polls":unanswered_polls})
-    else:
-        return Response({"message":"please login to view polls"})
+    # else:
+    #     return Response({"message":"please login to view polls"})
 
         
 @api_view(['POST'])

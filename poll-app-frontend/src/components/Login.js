@@ -10,7 +10,7 @@ const user={
 // {
 
 // }
-export default function Login(props)
+export default function Login()
 {
     return (
         <>
@@ -29,7 +29,7 @@ export default function Login(props)
       <Button variant="primary" type="submit" onClick={(e)=>{
         e.preventDefault()
         // log_user()
-        fetch('http://127.0.0.1:7000/login', {
+        fetch('http://localhost:7000/login', {
      
         // Adding method type
         method: "POST",
@@ -45,8 +45,7 @@ export default function Login(props)
     })
         .then((response)=>response.json())
         .then((data)=>{
-            console.log(data.token)
-            props.setToken(data.token)
+            console.log(data.message)
         })
     }}> 
         Submit

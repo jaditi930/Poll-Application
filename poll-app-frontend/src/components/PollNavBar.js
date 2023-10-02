@@ -5,8 +5,8 @@ import Button from 'react-bootstrap/esm/Button';
 import { Link } from 'react-router-dom';
 function logout()
 {
-  fetch('http://127.0.0.1:7000/logout',{
-  'credentials':'include'
+  fetch('http://localhost:7000/logout',{
+  credentials:'include'
   })
   .then((response)=>response.json())
   .then((data)=>{
