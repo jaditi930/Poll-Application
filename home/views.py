@@ -17,6 +17,12 @@ def log_in(request):
     else:
         return Response({"message":"user not logged in"})
     
+@api_view(['GET'])
+def get_cookie(request):
+    cookies=request.headers["Cookie"].split(";")[0].split("=")[1]
+    print(cookies)
+    return Response({"cookies":cookies})
+
 @api_view(['POST'])
 def signin(request):
 
@@ -82,8 +88,8 @@ def get_active_polls(request):
         print(answered_polls)
         
         return Response({"answered_polls":answered_polls,"unanswered_polls":unanswered_polls})
-    # else:
-    #     return Response({"message":"please login to view polls"})
+    else:
+        return Response({"message":"please login to view polls"})
 
         
 @api_view(['POST'])

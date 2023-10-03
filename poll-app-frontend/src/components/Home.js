@@ -20,8 +20,8 @@ export default function Home()
             return cookieValue;
         }
         const csrftoken = getCookie('csrftoken');
-        console.log(document.cookie)
-        fetch("http://localhost:7000/",{
+        console.log(csrftoken)
+        fetch("http://127.0.0.1:7000/",{
             method:"POST",
             credentials:'include',
             body:JSON.stringify({

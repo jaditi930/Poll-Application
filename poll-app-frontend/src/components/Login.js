@@ -29,7 +29,7 @@ export default function Login()
       <Button variant="primary" type="submit" onClick={(e)=>{
         e.preventDefault()
         // log_user()
-        fetch('http://localhost:7000/login', {
+        fetch('http://127.0.0.1:7000/login', {
      
         // Adding method type
         method: "POST",
@@ -46,6 +46,16 @@ export default function Login()
         .then((response)=>response.json())
         .then((data)=>{
             console.log(data.message)
+            fetch("http://127.0.0.1:7000/get_cookie",{
+            credentials:'include',
+            })
+            .then((response)=>response.json())
+            .then((data)=>{
+              console.log(data)
+              var now = new Date();
+              now.setFullYear( now.getFullYear() + 1 );
+              document.cookie = 'csrftoken='+data.cookies+';expires='+now.toUTCString()+';path=/';
+            })
         })
     }}> 
         Submit
