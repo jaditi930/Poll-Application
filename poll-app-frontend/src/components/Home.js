@@ -4,6 +4,7 @@ import { useEffect } from "react"
 export default function Home()
 {
     useEffect(()=>{
+        console.log("hello")
         function getCookie(name) {
             let cookieValue = null;
             if (document.cookie && document.cookie !== '') {
@@ -20,18 +21,14 @@ export default function Home()
             return cookieValue;
         }
         const csrftoken = getCookie('csrftoken');
-        console.log(csrftoken)
+        // console.log(csrftoken)
         fetch("http://127.0.0.1:7000/",{
-            method:"POST",
             credentials:'include',
-            body:JSON.stringify({
-                "user":"aditi"
-                }),
                 // Adding headers to the request
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8",
-                    "X-CSRFToken":csrftoken
-                }
+                // headers: {
+                //     "Content-type": "application/json; charset=UTF-8",
+                    // "X-CSRFToken":csrftoken
+                // }
             })
             .then((res)=> res.json() )
             .then((data)=> {

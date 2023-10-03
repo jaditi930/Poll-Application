@@ -1,5 +1,6 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useNavigate } from 'react-router-dom';
 
 const user={
     username:"",
@@ -10,8 +11,9 @@ const user={
 // {
 
 // }
-export default function Login()
+export default function Login(props)
 {
+  const navigate=useNavigate();
     return (
         <>
     <Form>
@@ -26,8 +28,8 @@ export default function Login()
         <Form.Control type="password" placeholder="Password" onChange={(e)=>{user.password=e.target.value}}/>
       </Form.Group>
 
-      <Button variant="primary" type="submit" onClick={(e)=>{
-        e.preventDefault()
+      <Button variant="primary" type="reset" onClick={(e)=>{
+
         // log_user()
         fetch('http://127.0.0.1:7000/login', {
      
@@ -46,6 +48,7 @@ export default function Login()
         .then((response)=>response.json())
         .then((data)=>{
             console.log(data.message)
+            props.setLogged(true)
             fetch("http://127.0.0.1:7000/get_cookie",{
             credentials:'include',
             })
@@ -57,6 +60,8 @@ export default function Login()
               document.cookie = 'csrftoken='+data.cookies+';expires='+now.toUTCString()+';path=/';
             })
         })
+        navigate("/")
+
     }}> 
         Submit
       </Button>
