@@ -3,7 +3,7 @@ import Home from './components/Home'
 import Login from './components/Login'
 import PollNavBar from './components/PollNavBar'
 import SignUp from './components/SignUp'
-import ShowPolls from './components/ShowPolls'
+import ShowPolls from './components/MyPolls'
 import { useState } from 'react';
 import { BrowserRouter as Router,Routes,Route} from 'react-router-dom';
 

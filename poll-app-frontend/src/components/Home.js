@@ -34,17 +34,14 @@ export default function Home()
             .then((res)=> res.json() )
             .then((data)=> {
             console.log(data);
-            if(data.answered_polls!=undefined)
-            setPolls(data.answered_polls)
-            console.log(pollsArray)
-            if(data.unanswered_polls.length>0)
-            setPolls(...pollsArray,data.unanswered_polls)
-            console.log(pollsArray)
+            if (data.message=="success"){
+            setPolls([...data.answered_polls,...data.unanswered_polls])
+            }
                 
             });
     },[])
     const polls=pollsArray.map((question)=>{
-        return <Question question={question}/>
+        return <Question question={question} all={pollsArray}/>
     })
     return (
         <ul>

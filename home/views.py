@@ -58,12 +58,14 @@ def create_poll(request):
     
 @api_view(['GET','POST'])
 def get_active_polls(request):
-    print(request.headers)
     if request.user.is_authenticated:
 
         # print(user_answered_list)
         active_polls=PollQuestions.objects.filter(status=True).exclude(owner=request.user)
         question={}
+        answered_polls=list()
+        unanswered_polls=list()
+
         for poll in active_polls:
             question_data=QuestionSerializer(poll)
             poll_options=PollOptions.objects.filter(question=poll)
@@ -72,12 +74,11 @@ def get_active_polls(request):
             for option in poll_options:
                 option_data=OptionSerializer(option)
                 options_list.append(option_data.data)
-            print(options_list)
+            # print(options_list)
 
             question=question_data.data
             question["options"]=options_list
-            answered_polls=[]
-            unanswered_polls=[]
+            # print(question)
             try:
                 user_response=PollResponses.objects.get(user=request.user,question=poll)
                 question["response"]=user_response.option.id
@@ -86,8 +87,9 @@ def get_active_polls(request):
                 unanswered_polls.append(question)
 
         print(answered_polls)
+        # print(unanswered_polls)
         
-        return Response({"answered_polls":answered_polls,"unanswered_polls":unanswered_polls})
+        return Response({"message":"success","answered_polls":answered_polls,"unanswered_polls":unanswered_polls})
     else:
         return Response({"message":"please login to view polls"})
 
