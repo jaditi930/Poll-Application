@@ -1,8 +1,9 @@
-import { useEffect } from "react"
-
+import { useEffect, useState } from "react"
+import Question from "./Question"
 
 export default function Home()
 {
+    const [pollsArray,setPolls]=useState([])
     useEffect(()=>{
         console.log("hello")
         function getCookie(name) {
@@ -27,16 +28,27 @@ export default function Home()
                 // Adding headers to the request
                 // headers: {
                 //     "Content-type": "application/json; charset=UTF-8",
-                    // "X-CSRFToken":csrftoken
+                //     "X-CSRFToken":csrftoken
                 // }
             })
             .then((res)=> res.json() )
             .then((data)=> {
             console.log(data);
+            if(data.answered_polls!=undefined)
+            setPolls(data.answered_polls)
+            console.log(pollsArray)
+            if(data.unanswered_polls.length>0)
+            setPolls(...pollsArray,data.unanswered_polls)
+            console.log(pollsArray)
+                
             });
     },[])
+    const polls=pollsArray.map((question)=>{
+        return <Question question={question}/>
+    })
     return (
-        <>
-        </>
+        <ul>
+        {polls}
+        </ul>
     )
 }

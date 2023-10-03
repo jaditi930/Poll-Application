@@ -1,5 +1,4 @@
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import { useNavigate } from 'react-router-dom';
 const user={
     email:"",
     username:"",
@@ -29,30 +28,28 @@ function signup_user()
 }
 export default function SignUp()
 {
+  const navigate=useNavigate("")
     return (
         <>
-    <Form>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control type="email" placeholder="Enter email" onChange={(e)=>{user.email=e.target.value}}/>
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicUsername">
-        <Form.Label>Username</Form.Label>
-        <Form.Control type="text" placeholder="Enter username" onChange={(e)=>{user.username=e.target.value}}/>
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" onChange={(e)=>{user.password=e.target.value}}/>
-      </Form.Group>
-      
-      <Button variant="primary" type="submit" onClick={(e)=>{
-        e.preventDefault()
-        signup_user()
-      }}>
-        Submit
-      </Button>
-    </Form>
+    <form>
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Email address</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" onChange={(e)=>{user.email=e.target.value}}/>
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputUsername1" class="form-label">Username</label>
+    <input type="text" class="form-control" id="exampleInputUsername1" onChange={(e)=>{user.username=e.target.value}}/>
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword1"  onChange={(e)=>{user.password=e.target.value}}/>
+  </div>
+  <button type="submit" class="btn btn-primary" onSubmit={(e)=>{
+            // e.preventDefault()
+    signup_user()
+    navigate("/login")
+  }}>Submit</button>
+</form>
             </>
     )
 }

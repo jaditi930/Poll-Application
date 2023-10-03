@@ -1,7 +1,3 @@
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import Button from 'react-bootstrap/esm/Button';
 import { Link } from 'react-router-dom';
 
 export default function PollNavBar(props)
@@ -30,29 +26,33 @@ export default function PollNavBar(props)
   })
 }
     return (
-        <Navbar bg="dark" data-bs-theme="dark">
-        <Container style={{justifyContent:"flex-start",minWidth:"90%",margin:"0px 10px"}}>
-          <Navbar.Brand href="">Poll App</Navbar.Brand>
-          <Nav style={{minWidth:"100%",alignItems:"center"}}>
-          {props.isLogged ?
-            (
-              <>
-            <Nav.Link as={Link} to="/">Home</Nav.Link>
-            <Nav.Link as={Link} to="answered_polls">Answered Polls</Nav.Link>
-            <Nav.Link as={Link} to="my_polls">My Polls</Nav.Link>
-            <Nav.Link as={Link} to="create_poll">Create new poll</Nav.Link>
-            <Button onClick={logout} style={{marginLeft:"auto"}} variant="secondary">Logout</Button>
-              </>
-            ): 
-            (
-              <>
-              <Nav.Link as={Link} to="login" style={{marginLeft:"auto"}}><Button>Login</Button></Nav.Link>
-              <Nav.Link as={Link} to="signup"><Button>Sign Up</Button></Nav.Link>
-              </>
-            )
-            }
-          </Nav>
-        </Container>
-      </Navbar>
+      <>
+        <nav class="navbar navbar-dark bg-dark navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <Link class="navbar-brand" to="/">Poll App</Link>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0" >
+                        <li class="nav-item">
+                            <Link class="nav-link active" aria-current="page" to="/">Home</Link>
+                        </li>
+                        <li class="nav-item">
+                            <Link class="nav-link active" aria-current="page" to="/create_poll">Create Poll</Link>
+                        </li>
+                        <li class="nav-item">
+                            <Link class="nav-link active" aria-current="page" to="/my_polls">My Polls</Link>
+                        </li>
+                        
+                    
+    </ul>
+    <form class="d-flex" role="search" onSubmit={logout}>
+      <button class="btn btn-outline-success" type="submit">Logout</button>
+     </form>
+                </div>
+            </div>
+        </nav>
+</>
     )
 }
