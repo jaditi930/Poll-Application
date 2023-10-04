@@ -30,12 +30,17 @@ export default function Home(props)
                 navigate("/login")
             });
     },[])
-    const polls=pollsArray.map((question)=>{
-        return <Question question={question} setDisplay={props.setDisplay} setMsg={props.setMsg}/>
+    const polls=pollsArray.map((question,index)=>{
+        return <Question question={question} setDisplay={props.setDisplay} setMsg={props.setMsg} index={index}/>
     })
     return (
-        <ul>
-        {polls}
+        <ul style={{listStyleType:"none"}}>
+        { pollsArray.length > 0 ? 
+        <>{polls}</>
+        : <h1>
+            No active polls
+        </h1>
+        }
         </ul>
     )
 }

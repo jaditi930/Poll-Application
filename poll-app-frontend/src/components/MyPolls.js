@@ -31,15 +31,19 @@ export default function MyPolls(props)
                 navigate("/login")
             });
     },[])
-    const quesArray=myQuestions.map((ques)=>{
-        return <>
-        <Question question={ques} key={ques.id}/>
-        <div>Total Count: {ques.total_count} votes</div>
-        </>
+    const quesArray=myQuestions.map((ques,index)=>{
+        return <li>
+        <Question question={ques} key={ques.id} index={index}/>
+        <div class="alert alert-secondary" role="alert">Total Count: {ques.total_count} votes</div>
+        </li>
     })
     return (
-        <>
-        {quesArray}
-        </>
+        <ul style={{listStyleType:"none"}}>
+        { quesArray.length>0 ? {quesArray}
+        : <h1>
+        No polls to view.
+        </h1>
+        }
+        </ul>
     )
 }

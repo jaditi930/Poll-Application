@@ -6,10 +6,10 @@ const user={
 
 }
 
-export default function SignUp()
+export default function SignUp(props)
 {
   const navigate=useNavigate("")
-  function signup_user(props)
+  function signup_user()
 {
     fetch('http://127.0.0.1:7000/signin', {
      
@@ -28,6 +28,7 @@ export default function SignUp()
     .then((response)=>response.json())
     .then((data)=>{
         console.log(data)
+        props.setDisplay("block")
         props.setMsg("SignUp successful. Please login now to continue.")
         navigate("/login")
 
@@ -38,8 +39,8 @@ export default function SignUp()
     })
 }
     return (
-        <>
-    <form>
+        <div class="mt-5">
+    <form class="col-md-5 ms-auto me-auto">
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Email address</label>
     <input type="email" class="form-control" id="exampleInputEmail1" onChange={(e)=>{user.email=e.target.value}}/>
@@ -52,12 +53,11 @@ export default function SignUp()
     <label for="exampleInputPassword1" class="form-label">Password</label>
     <input type="password" class="form-control" id="exampleInputPassword1"  onChange={(e)=>{user.password=e.target.value}}/>
   </div>
-  <button type="submit" class="btn btn-primary" onSubmit={(e)=>{
-            // e.preventDefault()
+  <button type="button" class="btn btn-outline-success" onClick={(e)=>{
     signup_user()
     navigate("/login")
   }}>Submit</button>
 </form>
-            </>
+            </div>
     )
 }

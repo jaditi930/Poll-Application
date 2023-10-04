@@ -62,23 +62,35 @@ return  <>
         </>
         : <>
         {
-            option.count !=undefined
-            ? 
-            <div class="d-flex">
-            <div>{index+1}. {option.value}</div>
-            <div class="ms-auto">{option.count} votes</div>
-            </div>
-            : <input class="form-check-input me-1" type="checkbox" value={option.id} id="firstCheckbox" onClick={(e)=>{submitResponse(e)}}/>
+            option.count == undefined
+            ? <input class="form-check-input me-1" type="checkbox" value={option.id} id="firstCheckbox" onClick={(e)=>{submitResponse(e)}}/>
+            : <></>
         }
         </>
+        // <label ></label>
+        // </>
+     }
+
+     {   
+     option.count !== undefined
+     
+     ? <div class="d-flex">
+            <div>{index+1}. {option.value}</div>
+            <div class="ms-5">{option.count} votes</div>
+            </div>
+     
+     : <label for="firstCheckbox">{option.value}</label>
      }
         </li>
 </>
 })
 // 
 return (
-    <li key={question.id}>{question.value}
-    <ul>
+    <li key={question.id} class="card" style={{padding:"15px",margin:"15px"}}>
+         <div class="card-header">
+         Q{props.index+1}. {question.value}
+        </div>
+    <ul class="list-group list-group-flush">
     {optionArray}
     </ul>
     </li>

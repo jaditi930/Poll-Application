@@ -79,19 +79,19 @@ export default function CreatePoll(props)
     }
 
     return (
-        <>
-        <form name="create_form">
+        <div class="mt-5">
+        <form class="col-md-6 ms-auto me-auto">
   <div class="mb-3">
     <label for="question" class="form-label">Question</label>
     <input type="text" class="form-control" id="question" name="question"/>
   </div>
     {optionsArray}
-  <div class="d-flex justify-center">
-  <button type="button" class="btn btn-secondary" onClick={addOptions}>Add Options+</button>
+  <div class="d-flex">
+  <button type="button" class="btn btn-outline-secondary ms-auto" onClick={addOptions}>Add Options+</button>
   </div>
 
-  <button type="submit" class="btn btn-primary" onClick={(e)=>{submitPoll(e)}}>Submit</button>
+  <button type="submit" class="btn btn-outline-success" onClick={(e)=>{submitPoll(e)}}>Submit</button>
 </form>
-        </>
+        </div>
     )
 }
