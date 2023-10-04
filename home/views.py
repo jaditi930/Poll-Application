@@ -47,7 +47,7 @@ def create_poll(request):
        newques.save()
 
        options=data["options"]
-       for value in list(options.values()):
+       for value in options:
            option=PollOptions(value=value,question=newques)
            option.save()
 

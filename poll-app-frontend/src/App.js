@@ -21,7 +21,7 @@ function App() {
       <Route exact path="/" element={<Home />}></Route>
       <Route exact path="/login" element={<Login setLogged={setLogged}/>}></Route>
       <Route path="/signup" element={<SignUp/>}></Route>
-      <Route path="/create" element={<CreatePoll/>}></Route>
+      <Route path="/create_poll" element={<CreatePoll/>}></Route>
       <Route path="/my_polls" element={<ShowPolls />}></Route>
     </Routes>
   </Router> 
