@@ -128,14 +128,17 @@ def my_polls(request):
             options=PollOptions.objects.filter(question=question)
             options_list=[]
 
+            total_count=0
             for option in options:
                 option_data=OptionSerializer(option)
                 option_data=option_data.data
                 option_count=PollResponses.objects.filter(question=question,option=option).count()
                 option_data["count"]=option_count
+                total_count+=option_count
                 options_list.append(option_data)
             
             question_data["options"]=options_list
+            question_data["total_count"]=total_count
             questions_list.append(question_data)
 
         

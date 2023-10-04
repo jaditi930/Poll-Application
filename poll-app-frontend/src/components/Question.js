@@ -53,10 +53,18 @@ return  <>
         : <input class="form-check-input me-1" type="checkbox" value={option.id} id="firstCheckbox" disabled/>
             }
         </>
-        : (<input class="form-check-input me-1" type="checkbox" value={option.id} id="firstCheckbox" onClick={(e)=>{submitResponse(e)}}/>
-        )
+        : <>
+        {
+            option.count !=undefined
+            ? 
+            <div class="d-flex">
+            <div>{option.value}</div>
+            <div class="ms-auto">{option.count} votes</div>
+            </div>
+            : <input class="form-check-input me-1" type="checkbox" value={option.id} id="firstCheckbox" onClick={(e)=>{submitResponse(e)}}/>
+        }
+        </>
      }
-        <label class="form-check-label" for="firstCheckbox">{option.value}</label>
         </li>
 </>
 })
