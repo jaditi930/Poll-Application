@@ -1,6 +1,6 @@
 export default function Question(props){
-const question=props.question
-console.log(props.all)
+
+    const question=props.question
 
 function submitResponse(e){
     const option_id=e.target.value
@@ -38,11 +38,18 @@ function submitResponse(e){
         })
         .then((data)=>{
             console.log(data)
+            props.setDisplay("block")
+            props.setMsg(data.message)
+        })
+        .catch((err)=>{
+            props.setDisplay("block")
+            props.setMsg("Error occured. Failed to save your response.")
+
         })
 
 }
 
-const optionArray=question.options.map((option)=>{
+const optionArray=question.options.map((option,index)=>{
 return  <>
 <li class="list-group-item">
     { question.response   
@@ -58,7 +65,7 @@ return  <>
             option.count !=undefined
             ? 
             <div class="d-flex">
-            <div>{option.value}</div>
+            <div>{index+1}. {option.value}</div>
             <div class="ms-auto">{option.count} votes</div>
             </div>
             : <input class="form-check-input me-1" type="checkbox" value={option.id} id="firstCheckbox" onClick={(e)=>{submitResponse(e)}}/>

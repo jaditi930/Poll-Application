@@ -5,7 +5,11 @@ const user={
     password:""
 
 }
-function signup_user()
+
+export default function SignUp()
+{
+  const navigate=useNavigate("")
+  function signup_user(props)
 {
     fetch('http://127.0.0.1:7000/signin', {
      
@@ -24,11 +28,15 @@ function signup_user()
     .then((response)=>response.json())
     .then((data)=>{
         console.log(data)
+        props.setMsg("SignUp successful. Please login now to continue.")
+        navigate("/login")
+
+    })
+    .catch((err)=>{
+      props.setDisplay("block")
+      props.setMsg("Username already taken. Please try again.")
     })
 }
-export default function SignUp()
-{
-  const navigate=useNavigate("")
     return (
         <>
     <form>

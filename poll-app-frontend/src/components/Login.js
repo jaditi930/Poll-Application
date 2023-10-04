@@ -40,6 +40,12 @@ export default function Login(props)
         var now = new Date();
         now.setFullYear( now.getFullYear() + 1 );
         document.cookie = 'csrftoken='+data.cookies+';expires='+now.toUTCString()+';path=/';
+        props.setDisplay("none")
+        navigate("/")
+      })
+      .catch((err)=>{
+        props.setDisplay("block")
+        props.setMsg("Failed to login. Please check ypur username and password")
       })
   })
 }
