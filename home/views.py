@@ -4,7 +4,14 @@ from django.contrib.auth import authenticate,login,logout
 from rest_framework.decorators import api_view
 from .models import *
 from .serializers import *
+from PollApplication.celery import add
 # Create your views here.
+
+@api_view(['GET'])
+def celery_task(request):
+    result=add.delay(10,20)
+    print(result)
+    return Response({"add":"success"})
 
 
 @api_view(['POST'])

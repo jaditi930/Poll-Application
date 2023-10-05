@@ -39,7 +39,7 @@ export default function MyPolls(props)
     })
     return (
         <ul style={{listStyleType:"none"}}>
-        { quesArray.length>0 ? {quesArray}
+        { quesArray.length>0 ? <>{quesArray}</>
         : <h1>
         No polls to view.
         </h1>

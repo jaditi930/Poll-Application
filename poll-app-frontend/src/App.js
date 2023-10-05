@@ -29,7 +29,7 @@ function App() {
     return cookieValue;
 }
   useEffect(()=>{
-if(getCookie('csrftoken')!="")
+if(getCookie('csrftoken')!=null)
 setLogged(true)
   },[])
 
