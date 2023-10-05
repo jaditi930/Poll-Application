@@ -5,6 +5,7 @@ export default function Question(props){
 function submitResponse(e){
     const option_id=e.target.value
     const ques_id=question.id
+    console.log(option_id,ques_id)
     function getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -33,15 +34,14 @@ function submitResponse(e){
                 "X-CSRFToken":getCookie("csrftoken")
             }
         })
-        .then((response)=>{
-            response.json()
-        })
+        .then((response)=> response.json())
         .then((data)=>{
             console.log(data)
             props.setDisplay("block")
             props.setMsg(data.message)
         })
         .catch((err)=>{
+            console.log(err)
             props.setDisplay("block")
             props.setMsg("Error occured. Failed to save your response.")
 

@@ -4,15 +4,8 @@ from django.contrib.auth import authenticate,login,logout
 from rest_framework.decorators import api_view
 from .models import *
 from .serializers import *
-from .tasks import add
+from .tasks import remove_poll
 # Create your views here.
-
-@api_view(['GET'])
-def celery_task(request):
-    result=add.delay(10,20)
-    print(result)
-    return Response({"add":"success"})
-
 
 @api_view(['POST'])
 def log_in(request):
@@ -52,6 +45,9 @@ def create_poll(request):
        owner=request.user
        newques=PollQuestions(owner=owner,value=ques_value)
        newques.save()
+
+       # remove polls older than 24 hours
+       remove_poll.apply_async(args=[newques.id],countdown=60)
 
        options=data["options"]
        for value in options:
@@ -116,7 +112,6 @@ def save_responses(request):
 
                 new_response=PollResponses(question=question,option=option,user=request.user)
                 new_response.save()
-
                 return Response({"message":"response saved successfully"})
         except:
             return Response({"message":"error occured in saving response"})

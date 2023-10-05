@@ -10,5 +10,4 @@ urlpatterns = [
     path('save_response',views.save_responses,name="save"),
     path('my_polls',views.my_polls,name="my_polls"),
     path('get_cookie',views.get_cookie),
-    path('task',views.celery_task),
 ]
