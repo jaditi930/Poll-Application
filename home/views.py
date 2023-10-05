@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate,login,logout
 from rest_framework.decorators import api_view
 from .models import *
 from .serializers import *
-from PollApplication.celery import add
+from .tasks import add
 # Create your views here.
 
 @api_view(['GET'])
