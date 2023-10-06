@@ -5,7 +5,7 @@ export default function PollNavBar(props)
     const navigate=useNavigate()
   function logout()
 {
-  fetch('http://127.0.0.1:7000/logout',{
+  fetch('https://aditi0601.pythonanywhere.com/logout',{
   credentials:'include'
   })
   .then((response)=>response.json())
