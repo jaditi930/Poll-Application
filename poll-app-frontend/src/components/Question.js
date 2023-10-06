@@ -21,7 +21,7 @@ function submitResponse(e){
         }
         return cookieValue;
     }
-    fetch("http://127.0.0.1:7000/save_response",{
+    fetch("https://aditi0601.pythonanywhere.com/save_response",{
         method:"POST",
         credentials:'include',
         body:JSON.stringify({
