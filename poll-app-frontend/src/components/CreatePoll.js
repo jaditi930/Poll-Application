@@ -28,7 +28,8 @@ export default function CreatePoll(props)
             return;
         }
         console.log(ques,optArray)
-        fetch("http://127.0.0.1:7000/create_poll",{
+        // fetch("http://127.0.0.1:7000/create_poll",{
+        fetch("https://aditi0601.pythonanywhere.com/create_poll",{
             method:"POST",
             credentials:'include',
             body:JSON.stringify({
