@@ -8,7 +8,7 @@ export default function MyPolls(props)
     const [myQuestions,setMyQuestions]=useState([])
     useEffect(()=>{
 
-        fetch("http://127.0.0.1:7000/my_polls",{
+        fetch("https://aditi0601.pythonanywhere.com/my_polls",{
             credentials:'include',
 
             })
