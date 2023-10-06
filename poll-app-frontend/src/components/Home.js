@@ -8,7 +8,7 @@ export default function Home(props)
     const [pollsArray,setPolls]=useState([])
     useEffect(()=>{
 
-        fetch("http://127.0.0.1:7000/",{
+        fetch("https://aditi0601.pythonanywhere.com/",{
             credentials:'include',
 
             })
