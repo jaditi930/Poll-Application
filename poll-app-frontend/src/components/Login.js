@@ -13,7 +13,7 @@ export default function Login(props)
 
   function log_user()
 {
-  fetch('http://127.0.0.1:7000/login', {
+  fetch('https://aditi0601.pythonanywhere.com/login', {
      
   // Adding method type
   method: "POST",
@@ -37,7 +37,7 @@ export default function Login(props)
         return;
       }
       props.setLogged(true)
-      fetch("http://127.0.0.1:7000/get_cookie",{
+      fetch("https://aditi0601.pythonanywhere.com/get_cookie",{
       credentials:'include',
       })
       .then((response)=>response.json())
