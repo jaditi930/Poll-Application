@@ -11,7 +11,7 @@ export default function SignUp(props)
   const navigate=useNavigate("")
   function signup_user()
 {
-    fetch('http://127.0.0.1:7000/signin', {
+    fetch('https://aditi0601.pythonanywhere.com/signin', {
      
     // Adding method type
     method: "POST",
